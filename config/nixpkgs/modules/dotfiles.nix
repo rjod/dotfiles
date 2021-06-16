@@ -166,13 +166,19 @@ let
         terminal = "tmux-256color";
         historyLimit = 5000;
         keyMode = "vi";
+        extraConfig = ''
+          # start windows and panes at 1
+          setw -g pane-base-index 1
+          set -ga terminal-overrides ",xterm-termite:Tc"
+          set-option -g default-shell ${pkgs.fish}/bin/fish
+        '';
         plugins = with pkgs; [
-          (tmuxPlugins.mkDerivation {
+          (tmuxPlugins.mkTmuxPlugin {
             pluginName = "statusbar";
             version = "1.0";
             src = ../../../tmux-plugins;
           })
-          (tmuxPlugins.mkDerivation {
+          (tmuxPlugins.mkTmuxPlugin {
             pluginName = "current-pane-hostname";
             version = "master";
             src = fetchFromGitHub {
@@ -182,7 +188,7 @@ let
               sha256 = "1w1x8w351v9yppw37kcs985mm5ikpmdnckfjwqyhlqx90lf9sqdy";
             };
           })
-          (tmuxPlugins.mkDerivation {
+          (tmuxPlugins.mkTmuxPlugin {
             pluginName = "simple-git-status";
             version = "master";
             src = fetchFromGitHub {
@@ -193,22 +199,17 @@ let
             };
           })
         ];
-        extraConfig = ''
-          # start windows and panes at 1
-          setw -g pane-base-index 1
-          set -ga terminal-overrides ",xterm-termite:Tc"
-          set-option -g default-shell ${pkgs.fish}/bin/fish
-        '';
+
       };
 
       home-manager = {
         enable = true;
-        path = "https://github.com/nix-community/home-manager/archive/release-20.09.tar.gz";
+        path = "https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz";
       };
     };
 
     home.keyboard = {
-      layout = "us(altgr-intl)";
+      layout = "no";
       model = "pc104";
       options = [
         "eurosign:e"
