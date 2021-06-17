@@ -210,8 +210,8 @@ let
 
       htop = {
         enable = true;
-        meters.left = [ "AllCPUs4" "Memory" "Swap" ];
-        meters.right = [ "Tasks" "LoadAverage" "Uptime" ];
+        settings.left_meter_modes = [ "AllCPUs4" "Memory" "Swap" ];
+        settings.right_meter_modes = [ "Tasks" "LoadAverage" "Uptime" ];
       };
 
 
